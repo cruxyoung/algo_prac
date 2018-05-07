@@ -14,6 +14,7 @@ public class QFWeighted {
 
     public int root(int i) {
         while (i != id[i]) {
+//            path compression: make node point to its grandparent
             id[i] = id[id[i]];
             i = id[i];
         }
@@ -25,14 +26,18 @@ public class QFWeighted {
     }
 
     public void union(int p, int q) {
+//        get the root of input node
         int rootP = root(p);
         int rootQ = root(q);
-//            id[p] = rootQ;
+
+//        connect small tree to a bigger tree
         if (siz[p] < siz[q]) {
+//            assign the root of bigger tree to small tree
             id[p] = rootQ;
             siz[q] += siz[p];
 
         } else {
+//            conversely
             id[q] = rootP;
             siz[p] += siz[q];
         }
